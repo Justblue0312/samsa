@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package samsa.api.recommendation.v1;
+
+option go_package = "github.com/justblue/samsa/gen/samsa/api/recommendation/v1;recommendationv1";
+
+message RecommendationRequest {
+    string user_id = 1;
+    string prompt = 2;
+    int32 limit = 3;
+}
+
+message StoryRecommendation {
+    string story_id = 1;
+    string title = 2;
+    string synopsis = 3;
+    string author = 4;
+    repeated string genres = 5;
+    string reason = 6;
+    string signal_source = 7;
+    string confidence_note = 8;
+}
+
+message RecommendationResponse {
+    string event = 1;
+    oneof payload {
+        StoryRecommendation recommendation = 2;
+        CachedResults cached_results = 3;
+        TokenUsage token_usage = 4;
+        ContextSignals signals = 5;
+        ErrorMessage error = 6;
+    }
+    int32 total = 7;
+    int64 elapsed_ms = 8;
+}
+
+message CachedResults {
+    repeated StoryRecommendation stories = 1;
+    string note = 2;
+}
+
+message TokenUsage {
+    message AgentUsage {
+        string name = 1;
+        int32 total_tokens = 2;
+        int64 elapsed_ms = 3;
+        double cost_usd = 4;
+    }
+    repeated AgentUsage agents = 1;
+    int32 total_tokens = 2;
+    double total_cost_usd = 3;
+    int64 total_elapsed_ms = 4;
+}
+
+message ContextSignals {
+    message Signal {
+        string type = 1;
+        double weight = 2;
+        string summary = 3;
+    }
+    repeated Signal signals = 1;
+}
+
+message ErrorMessage {
+    string message = 1;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+    enum ServingStatus {
+        SERVING_STATUS_UNSPECIFIED = 0;
+        SERVING = 1;
+        NOT_SERVING = 2;
+    }
+    ServingStatus status = 1;
+}
+
+service RecommendationService {
+    rpc GetRecommendations(RecommendationRequest) returns (stream RecommendationResponse);
+    rpc Health(HealthCheckRequest) returns (HealthCheckResponse);
+}

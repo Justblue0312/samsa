@@ -160,6 +160,27 @@ services:
     volumes:
       - ./deploy/rustfs:/s3-init
 
+  story-recommender:
+    build:
+      context: ../packages/samsakit
+      dockerfile: Dockerfile
+    container_name: samsa-story-recommender
+    ports:
+      - "8083:8083"
+      - "50051:50051"
+    environment:
+      - DATABASE_URL=postgresql://${SAMSA_POSTGRES_USER}:${SAMSA_POSTGRES_PWD}@db:${SAMSA_POSTGRES_PORT}/${SAMSA_POSTGRES_DATABASE}
+      - REDIS_URL=redis://dragonfly:${SAMSA_REDIS_PORT}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - GO_SERVER_URL=http://host.docker.internal:8000
+    depends_on:
+      - db
+      - dragonfly
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
 volumes:
   dragonflyVolume:
   postgresVolume:
