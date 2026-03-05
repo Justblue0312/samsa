@@ -1,0 +1,49 @@
+{
+    "languages": {
+        "Python": {
+            "language_servers": [
+                "pyright",
+                "!basedpyright",
+                "!ty",
+                "ruff",
+                "!pylsp",
+            ],
+            "format_on_save": "on",
+            "wrap_guides": [120],
+            "formatter": [
+                { "code_action": "source.organizeImports.ruff" },
+                { "code_action": "source.fixAll.ruff" },
+                {
+                    "language_server": {
+                        "name": "ruff",
+                    },
+                },
+            ],
+        },
+    },
+    "lsp": {
+        "pyright": {
+            "settings": {
+                "python": {
+                    "pythonPath": ".venv/bin/python",
+                },
+            },
+        },
+    },
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/.jj",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/.classpath",
+        "**/.settings",
+        "**/.mypy_cache",
+        "**/.pytest_cache",
+        "**/.ruff_cache",
+        "**/__pycache__",
+        "**/.idea/",
+    ],
+}

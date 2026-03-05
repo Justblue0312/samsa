@@ -1,0 +1,182 @@
+version: "2"
+sql:
+  - engine: postgresql
+    queries: queries/
+    schema: migrations/
+    gen:
+      go:
+        package: sqlc
+        out: ../gen/sqlc
+        sql_package: pgx/v5
+        emit_json_tags: true
+        emit_prepared_queries: true
+        emit_interface: true
+        emit_exact_table_names: false
+        overrides:
+          - db_type: uuid
+            nullable: false
+            go_type:
+              import: github.com/google/uuid
+              type: UUID
+          - db_type: uuid
+            nullable: true
+            go_type:
+              import: github.com/google/uuid
+              type: UUID
+              pointer: true
+
+          - db_type: "text"
+            nullable: true
+            go_type:
+              type: "string"
+              pointer: true
+
+          - db_type: "text"
+            nullable: false
+            go_type:
+              type: "string"
+
+          - db_type: "pg_catalog.int4"
+            nullable: false
+            go_type:
+              type: "int32"
+              builtin: true
+          - db_type: "pg_catalog.int4"
+            nullable: true
+            go_type:
+              type: "int32"
+              builtin: true
+              pointer: true
+
+          - db_type: "pg_catalog.float4"
+            nullable: false
+            go_type:
+              type: "float32"
+              builtin: true
+          - db_type: "pg_catalog.float4"
+            nullable: true
+            go_type:
+              type: "float32"
+              builtin: true
+              pointer: true
+
+          - db_type: "int4"
+            nullable: false
+            go_type:
+              type: "int32"
+              builtin: true
+          - db_type: "int4"
+            nullable: true
+            go_type:
+              type: "int32"
+              builtin: true
+              pointer: true
+
+          - db_type: "integer"
+            nullable: false
+            go_type:
+              type: "int32"
+              builtin: true
+          - db_type: "integer"
+            nullable: true
+            go_type:
+              type: "int32"
+              builtin: true
+              pointer: true
+
+          - db_type: "pg_catalog.bpchar"
+            nullable: true
+            go_type:
+              type: "string"
+              pointer: true
+          - db_type: "pg_catalog.bpchar"
+            nullable: false
+            go_type:
+              type: "string"
+
+          - db_type: "varchar"
+            nullable: true
+            go_type:
+              type: "string"
+              pointer: true
+          - db_type: "varchar"
+            nullable: false
+            go_type:
+              type: "string"
+
+          - db_type: "pg_catalog.varchar"
+            nullable: true
+            go_type:
+              type: "string"
+              pointer: true
+          - db_type: "pg_catalog.varchar"
+            nullable: false
+            go_type:
+              type: "string"
+
+          - db_type: "bool"
+            nullable: true
+            go_type:
+              type: "bool"
+              pointer: true
+          - db_type: "bool"
+            nullable: false
+            go_type:
+              type: "bool"
+
+          - db_type: "pg_catalog.bool"
+            nullable: true
+            go_type:
+              type: "bool"
+              pointer: true
+          - db_type: "pg_catalog.bool"
+            nullable: false
+            go_type:
+              type: "bool"
+
+          - db_type: "date"
+            nullable: true
+            go_type:
+              type: "time.Time"
+              pointer: true
+          - db_type: "date"
+            nullable: false
+            go_type:
+              type: "time.Time"
+
+          - db_type: "boolean"
+            nullable: true
+            go_type:
+              type: "bool"
+              pointer: true
+          - db_type: "boolean"
+            nullable: false
+            go_type:
+              type: "bool"
+
+          - db_type: pg_catalog.timestamptz
+            go_type:
+              import: "time"
+              type: "Time"
+          - db_type: timestamptz
+            go_type:
+              import: "time"
+              type: "Time"
+          - db_type: pg_catalog.timestamptz
+            nullable: true
+            go_type:
+              import: "time"
+              type: "Time"
+              pointer: true
+          - db_type: timestamptz
+            nullable: true
+            go_type:
+              import: "time"
+              type: "Time"
+              pointer: true
+        rename:
+          ip_address: IPAddress
+          oauth_account: OAuthAccount
+          account_id: AccountID
+          dob: DOB
+          oauth_provider: OAuthProvider

@@ -1,0 +1,7 @@
+{
+  "languages": {
+    "Go": {
+      "language_servers": ["gopls", "golangci-lint"]
+    }
+  }
+}

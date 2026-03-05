@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "root"
+    },
+    {
+      "path": "server",
+      "name": "server"
+    },
+    {
+      "path": "client",
+      "name": "client"
+    },
+    {
+      "path": "docs",
+      "name": "docs"
+    },
+    {
+      "path": "packages/crawlbot",
+      "name": "crawlbot"
+    },
+    {
+      "path": "packages/samsakit",
+      "name": "samsakit"
+    },
+  ]
+}

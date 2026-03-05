@@ -1,0 +1,6973 @@
+basePath: /api/v1
+definitions:
+  apierror.APIError:
+    properties:
+      code:
+        type: string
+      details: {}
+      message:
+        type: string
+    type: object
+  author.AuthorReposonse:
+    properties:
+      accepted_terms_of_service:
+        type: boolean
+      bio:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      dob:
+        type: string
+      email_newsletters_and_changelogs:
+        type: boolean
+      email_promotions_and_events:
+        type: boolean
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      is_deleted:
+        type: boolean
+      is_recommended:
+        type: boolean
+      last_name:
+        type: string
+      media_id:
+        type: string
+      phone:
+        type: string
+      slug:
+        type: string
+      stage_name:
+        type: string
+      stats:
+        items:
+          type: integer
+        type: array
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  author.AuthorResponses:
+    properties:
+      authors:
+        items:
+          $ref: '#/definitions/sqlc.Author'
+        type: array
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+    type: object
+  author.CreateAuthorRequest:
+    properties:
+      accepted_terms_of_service:
+        type: boolean
+      bio:
+        type: string
+      description:
+        type: string
+      dob:
+        type: string
+      email_newsletters_and_changelogs:
+        type: boolean
+      email_promotions_and_events:
+        type: boolean
+      first_name:
+        type: string
+      gender:
+        type: string
+      last_name:
+        type: string
+      media_id:
+        type: string
+      phone:
+        type: string
+      slug:
+        type: string
+      stage_name:
+        type: string
+      user_id:
+        type: string
+    required:
+    - slug
+    - stage_name
+    - user_id
+    type: object
+  author.SetRecommendedRequest:
+    properties:
+      is_recommended:
+        type: boolean
+    type: object
+  author.UpdateAuthorRequest:
+    properties:
+      bio:
+        type: string
+      description:
+        type: string
+      dob:
+        type: string
+      email_newsletters_and_changelogs:
+        type: boolean
+      email_promotions_and_events:
+        type: boolean
+      first_name:
+        type: string
+      gender:
+        type: string
+      last_name:
+        type: string
+      media_id:
+        type: string
+      phone:
+        type: string
+      stage_name:
+        type: string
+    type: object
+  chapter.ChapterResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      is_published:
+        type: boolean
+      number:
+        type: integer
+      published_at:
+        type: string
+      sort_order:
+        type: integer
+      story_id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+      total_bookmarks:
+        type: integer
+      total_favorites:
+        type: integer
+      total_flags:
+        type: integer
+      total_reports:
+        type: integer
+      total_views:
+        type: integer
+      total_votes:
+        type: integer
+      total_words:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  chapter.CreateChapterRequest:
+    properties:
+      is_published:
+        type: boolean
+      number:
+        type: integer
+      sort_order:
+        type: integer
+      story_id:
+        type: string
+      summary:
+        type: string
+      title:
+        maxLength: 500
+        type: string
+      total_words:
+        type: integer
+    required:
+    - story_id
+    - title
+    type: object
+  chapter.ReorderChapterRequest:
+    properties:
+      sort_order:
+        type: integer
+      story_id:
+        type: string
+    required:
+    - sort_order
+    - story_id
+    type: object
+  chapter.UpdateChapterRequest:
+    properties:
+      is_published:
+        type: boolean
+      number:
+        type: integer
+      sort_order:
+        type: integer
+      summary:
+        type: string
+      title:
+        maxLength: 500
+        type: string
+      total_words:
+        type: integer
+    type: object
+  comment.BulkCommentRequest:
+    properties:
+      ids:
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - ids
+    type: object
+  comment.CommentListResponse:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/comment.CommentResponse'
+        type: array
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+    type: object
+  comment.CommentResponse:
+    properties:
+      comment:
+        $ref: '#/definitions/sqlc.Comment'
+      reaction_count:
+        type: integer
+      reaction_details:
+        additionalProperties:
+          format: int64
+          type: integer
+        type: object
+      vote_count:
+        type: integer
+      vote_details:
+        additionalProperties:
+          format: int64
+          type: integer
+        type: object
+    type: object
+  document.CreateDocumentRequest:
+    properties:
+      branch_name:
+        maxLength: 100
+        type: string
+      content:
+        items:
+          type: integer
+        type: array
+      document_type:
+        type: string
+      folder_id:
+        type: string
+      is_template:
+        type: boolean
+      language:
+        type: string
+      slug:
+        maxLength: 255
+        type: string
+      story_id:
+        type: string
+      summary:
+        type: string
+      title:
+        maxLength: 500
+        type: string
+    required:
+    - branch_name
+    - language
+    - slug
+    - story_id
+    - title
+    type: object
+  document.DocumentResponse:
+    properties:
+      branch_name:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      document_type:
+        type: string
+      folder_id:
+        type: string
+      id:
+        type: string
+      is_locked:
+        type: boolean
+      is_template:
+        type: boolean
+      language:
+        type: string
+      previous_version_id:
+        type: string
+      slug:
+        type: string
+      status:
+        $ref: '#/definitions/document.DocumentStatus'
+      story_id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+      total_downloads:
+        type: integer
+      total_shares:
+        type: integer
+      total_views:
+        type: integer
+      total_words:
+        type: integer
+      updated_at:
+        type: string
+      version_number:
+        type: integer
+    type: object
+  document.DocumentStatus:
+    enum:
+    - draft
+    - pending_review
+    - is_reviewed
+    - is_approved
+    - rejected
+    - archived
+    - deleted
+    type: string
+    x-enum-varnames:
+    - DocumentStatusDraft
+    - DocumentStatusPendingReview
+    - DocumentStatusIsReviewed
+    - DocumentStatusIsApproved
+    - DocumentStatusRejected
+    - DocumentStatusArchived
+    - DocumentStatusDeleted
+  document.UpdateDocumentRequest:
+    properties:
+      branch_name:
+        maxLength: 100
+        type: string
+      content:
+        items:
+          type: integer
+        type: array
+      document_type:
+        type: string
+      folder_id:
+        type: string
+      is_locked:
+        type: boolean
+      is_template:
+        type: boolean
+      language:
+        type: string
+      slug:
+        maxLength: 255
+        type: string
+      summary:
+        type: string
+      title:
+        maxLength: 500
+        type: string
+    type: object
+  document_folder.CreateDocumentFolderRequest:
+    properties:
+      name:
+        maxLength: 255
+        type: string
+      owner_id:
+        type: string
+      parent_id:
+        type: string
+      story_id:
+        type: string
+    required:
+    - name
+    - owner_id
+    - story_id
+    type: object
+  document_folder.DocumentFolderResponse:
+    properties:
+      created_at:
+        type: string
+      depth:
+        type: integer
+      documents_count:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+      owner_id:
+        type: string
+      parent_id:
+        type: string
+      story_id:
+        type: string
+      subfolders_count:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  document_folder.MoveDocumentFolderRequest:
+    properties:
+      parent_id:
+        type: string
+    type: object
+  document_folder.UpdateDocumentFolderRequest:
+    properties:
+      name:
+        maxLength: 255
+        type: string
+      parent_id:
+        type: string
+    type: object
+  file.FileResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      is_archived:
+        type: boolean
+      mime_type:
+        type: string
+      name:
+        type: string
+      owner_id:
+        type: string
+      path:
+        type: string
+      payload:
+        type: string
+      reference:
+        type: string
+      service:
+        type: string
+      size:
+        type: integer
+      source:
+        $ref: '#/definitions/sqlc.FileUploadSource'
+      updated_at:
+        type: string
+    type: object
+  file.ListResponse:
+    properties:
+      files:
+        items:
+          $ref: '#/definitions/file.FileResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  flag.CreateFlagRequest:
+    properties:
+      chapter_id:
+        type: string
+      description:
+        maxLength: 2000
+        type: string
+      flag_rate:
+        allOf:
+        - $ref: '#/definitions/flag.FlagRate'
+        enum:
+        - low
+        - medium
+        - high
+        - critical
+      flag_score:
+        maximum: 100
+        minimum: 0
+        type: number
+      flag_type:
+        allOf:
+        - $ref: '#/definitions/flag.FlagType'
+        enum:
+        - spam
+        - inappropriate
+        - copyright
+        - plagiarism
+        - harassment
+        - hate_speech
+        - self_harm
+        - explicit
+        - privacy
+        - misinformation
+        - other
+      story_id:
+        type: string
+      title:
+        maxLength: 255
+        type: string
+    required:
+    - flag_rate
+    - flag_score
+    - flag_type
+    - story_id
+    - title
+    type: object
+  flag.FlagListResponse:
+    properties:
+      flags:
+        items:
+          $ref: '#/definitions/flag.FlagResponse'
+        type: array
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+    type: object
+  flag.FlagRate:
+    enum:
+    - low
+    - medium
+    - high
+    - critical
+    type: string
+    x-enum-varnames:
+    - FlagRateLow
+    - FlagRateMedium
+    - FlagRateHigh
+    - FlagRateCritical
+  flag.FlagResponse:
+    properties:
+      chapter_id:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      flag_rate:
+        $ref: '#/definitions/flag.FlagRate'
+      flag_score:
+        type: number
+      flag_type:
+        $ref: '#/definitions/flag.FlagType'
+      id:
+        type: string
+      inspector_id:
+        type: string
+      story_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  flag.FlagType:
+    enum:
+    - spam
+    - inappropriate
+    - copyright
+    - plagiarism
+    - harassment
+    - hate_speech
+    - self_harm
+    - explicit
+    - privacy
+    - misinformation
+    - other
+    type: string
+    x-enum-varnames:
+    - FlagTypeSpam
+    - FlagTypeInappropriate
+    - FlagTypeCopyright
+    - FlagTypePlagiarism
+    - FlagTypeHarassment
+    - FlagTypeHateSpeech
+    - FlagTypeSelfHarm
+    - FlagTypeExplicit
+    - FlagTypePrivacy
+    - FlagTypeMisinformation
+    - FlagTypeOther
+  flag.UpdateFlagRequest:
+    properties:
+      description:
+        maxLength: 2000
+        type: string
+      flag_rate:
+        allOf:
+        - $ref: '#/definitions/flag.FlagRate'
+        enum:
+        - low
+        - medium
+        - high
+        - critical
+      flag_score:
+        maximum: 100
+        minimum: 0
+        type: number
+      flag_type:
+        allOf:
+        - $ref: '#/definitions/flag.FlagType'
+        enum:
+        - spam
+        - inappropriate
+        - copyright
+        - plagiarism
+        - harassment
+        - hate_speech
+        - self_harm
+        - explicit
+        - privacy
+        - misinformation
+        - other
+      title:
+        maxLength: 255
+        type: string
+    type: object
+  queryparam.PaginationMeta:
+    properties:
+      has_next:
+        type: boolean
+      has_prev:
+        type: boolean
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_count:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  spinnet.CreateSpinnetRequest:
+    properties:
+      category:
+        maxLength: 100
+        type: string
+      content:
+        items:
+          type: integer
+        type: array
+      name:
+        maxLength: 255
+        type: string
+      owner_id:
+        type: string
+      smart_syntax:
+        maxLength: 100
+        type: string
+    required:
+    - name
+    type: object
+  spinnet.SpinnetListResponse:
+    properties:
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+      spinnets:
+        items:
+          $ref: '#/definitions/spinnet.SpinnetResponse'
+        type: array
+    type: object
+  spinnet.SpinnetResponse:
+    properties:
+      category:
+        type: string
+      content:
+        items:
+          type: integer
+        type: array
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      owner_id:
+        type: string
+      smart_syntax:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  spinnet.UpdateSpinnetRequest:
+    properties:
+      category:
+        maxLength: 100
+        type: string
+      content:
+        items:
+          type: integer
+        type: array
+      name:
+        maxLength: 255
+        type: string
+      smart_syntax:
+        maxLength: 100
+        type: string
+    required:
+    - name
+    type: object
+  sqlc.Author:
+    properties:
+      accepted_terms_of_service:
+        type: boolean
+      bio:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      dob:
+        type: string
+      email_newsletters_and_changelogs:
+        type: boolean
+      email_promotions_and_events:
+        type: boolean
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      is_deleted:
+        type: boolean
+      is_recommended:
+        type: boolean
+      last_name:
+        type: string
+      media_id:
+        type: string
+      phone:
+        type: string
+      slug:
+        type: string
+      stage_name:
+        type: string
+      stats:
+        items:
+          type: integer
+        type: array
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  sqlc.Comment:
+    properties:
+      content:
+        items:
+          type: integer
+        type: array
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      deleted_by:
+        type: string
+      depth:
+        type: integer
+      entity_id:
+        type: string
+      entity_type:
+        $ref: '#/definitions/sqlc.EntityType'
+      id:
+        type: string
+      is_archived:
+        type: boolean
+      is_deleted:
+        type: boolean
+      is_pinned:
+        type: boolean
+      is_reported:
+        type: boolean
+      is_resolved:
+        type: boolean
+      metadata:
+        items:
+          type: integer
+        type: array
+      parent_id:
+        type: string
+      pinned_at:
+        type: string
+      pinned_by:
+        type: string
+      reaction_count:
+        type: integer
+      reply_count:
+        type: integer
+      reported_at:
+        type: string
+      reported_by:
+        type: string
+      score:
+        type: number
+      source:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  sqlc.DocumentStatus:
+    enum:
+    - draft
+    - pending_review
+    - is_reviewed
+    - is_approved
+    - rejected
+    - archived
+    - deleted
+    type: string
+    x-enum-varnames:
+    - DocumentStatusDraft
+    - DocumentStatusPendingReview
+    - DocumentStatusIsReviewed
+    - DocumentStatusIsApproved
+    - DocumentStatusRejected
+    - DocumentStatusArchived
+    - DocumentStatusDeleted
+  sqlc.DocumentStatusHistory:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      document_id:
+        type: string
+      id:
+        type: string
+      set_status_by:
+        type: string
+      status:
+        $ref: '#/definitions/sqlc.DocumentStatus'
+      updated_at:
+        type: string
+    type: object
+  sqlc.EntityType:
+    enum:
+    - story
+    - chapter
+    - comment
+    - submission
+    type: string
+    x-enum-varnames:
+    - EntityTypeStory
+    - EntityTypeChapter
+    - EntityTypeComment
+    - EntityTypeSubmission
+  sqlc.FileUploadSource:
+    enum:
+    - url
+    - file
+    - presigned
+    - base64
+    type: string
+    x-enum-varnames:
+    - FileUploadSourceUrl
+    - FileUploadSourceFile
+    - FileUploadSourcePresigned
+    - FileUploadSourceBase64
+  sqlc.GetStoryVoteStatsRow:
+    properties:
+      average_rating:
+        type: number
+      total_votes:
+        type: integer
+    type: object
+  sqlc.RateLimitGroup:
+    enum:
+    - default
+    - web
+    - elevated
+    - restricted
+    type: string
+    x-enum-varnames:
+    - RateLimitGroupDefault
+    - RateLimitGroupWeb
+    - RateLimitGroupElevated
+    - RateLimitGroupRestricted
+  sqlc.ReportStatus:
+    enum:
+    - pending
+    - resolved
+    - rejected
+    - archived
+    type: string
+    x-enum-varnames:
+    - ReportStatusPending
+    - ReportStatusResolved
+    - ReportStatusRejected
+    - ReportStatusArchived
+  sqlc.StoryStatus:
+    enum:
+    - draft
+    - published
+    - archived
+    - deleted
+    - is_reviewed
+    - is_approved
+    type: string
+    x-enum-varnames:
+    - StoryStatusDraft
+    - StoryStatusPublished
+    - StoryStatusArchived
+    - StoryStatusDeleted
+    - StoryStatusIsReviewed
+    - StoryStatusIsApproved
+  sqlc.StoryVote:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      rating:
+        type: integer
+      story_id:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  sqlc.Submission:
+    properties:
+      approved_at:
+        type: string
+      approver_id:
+        type: string
+      context:
+        items:
+          type: integer
+        type: array
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      expose_id:
+        type: string
+      id:
+        type: string
+      is_deleted:
+        type: boolean
+      message:
+        type: string
+      requester_id:
+        type: string
+      search_vector: {}
+      status:
+        $ref: '#/definitions/sqlc.SubmissionStatus'
+      title:
+        type: string
+      type:
+        $ref: '#/definitions/sqlc.SubmissionType'
+      updated_at:
+        type: string
+    type: object
+  sqlc.SubmissionAssignment:
+    properties:
+      assigned_at:
+        type: string
+      assigned_by:
+        type: string
+      assigned_to:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      submission_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  sqlc.SubmissionStatus:
+    enum:
+    - pending
+    - claimed
+    - assigned
+    - approved
+    - rejected
+    - timeouted
+    - archived
+    type: string
+    x-enum-varnames:
+    - SubmissionStatusPending
+    - SubmissionStatusClaimed
+    - SubmissionStatusAssigned
+    - SubmissionStatusApproved
+    - SubmissionStatusRejected
+    - SubmissionStatusTimeouted
+    - SubmissionStatusArchived
+  sqlc.SubmissionStatusHistory:
+    properties:
+      changed_by:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      new_status:
+        $ref: '#/definitions/sqlc.SubmissionStatus'
+      old_status:
+        $ref: '#/definitions/sqlc.SubmissionStatus'
+      reason:
+        type: string
+      submission_id:
+        type: string
+    type: object
+  sqlc.SubmissionType:
+    enum:
+    - author_request
+    - story_approval
+    - chapter_approval
+    - other
+    type: string
+    x-enum-varnames:
+    - SubmissionTypeAuthorRequest
+    - SubmissionTypeStoryApproval
+    - SubmissionTypeChapterApproval
+    - SubmissionTypeOther
+  sqlc.User:
+    properties:
+      ban_reason:
+        type: string
+      banned_at:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      email_verified:
+        type: boolean
+      id:
+        type: string
+      is_active:
+        type: boolean
+      is_admin:
+        type: boolean
+      is_author:
+        type: boolean
+      is_banned:
+        type: boolean
+      is_deleted:
+        type: boolean
+      is_staff:
+        type: boolean
+      last_login_at:
+        type: string
+      password_hash:
+        type: string
+      rate_limit_group:
+        $ref: '#/definitions/sqlc.RateLimitGroup'
+      updated_at:
+        type: string
+    type: object
+  story.CreateStoryRequest:
+    properties:
+      genres:
+        items:
+          type: string
+        type: array
+      media_id:
+        type: string
+      name:
+        maxLength: 255
+        type: string
+      settings:
+        items:
+          type: integer
+        type: array
+      slug:
+        maxLength: 255
+        type: string
+      synopsis:
+        type: string
+    required:
+    - media_id
+    - name
+    - slug
+    type: object
+  story.StoryResponse:
+    properties:
+      created_at:
+        type: string
+      first_published_at:
+        type: string
+      genres:
+        items:
+          type: string
+        type: array
+      id:
+        type: string
+      is_recommended:
+        type: boolean
+      is_verified:
+        type: boolean
+      last_published_at:
+        type: string
+      media_id:
+        type: string
+      name:
+        type: string
+      owner_id:
+        type: string
+      settings:
+        items:
+          type: integer
+        type: array
+      slug:
+        type: string
+      status:
+        $ref: '#/definitions/sqlc.StoryStatus'
+      synopsis:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  story.UpdateStoryRequest:
+    properties:
+      genres:
+        items:
+          type: string
+        type: array
+      is_recommended:
+        type: boolean
+      is_verified:
+        type: boolean
+      media_id:
+        type: string
+      name:
+        maxLength: 255
+        type: string
+      settings:
+        items:
+          type: integer
+        type: array
+      slug:
+        maxLength: 255
+        type: string
+      status:
+        $ref: '#/definitions/sqlc.StoryStatus'
+      synopsis:
+        type: string
+    type: object
+  story_post.BulkDeleteRequest:
+    properties:
+      ids:
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - ids
+    type: object
+  story_post.CreateStoryPostRequest:
+    properties:
+      author_id:
+        type: string
+      chapter_id:
+        type: string
+      content:
+        type: string
+      is_notify_followers:
+        type: boolean
+      media_ids:
+        items:
+          type: string
+        type: array
+      story_id:
+        type: string
+    required:
+    - author_id
+    - content
+    type: object
+  story_post.StoryPostListResponse:
+    properties:
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+      posts:
+        items:
+          $ref: '#/definitions/story_post.StoryPostResponse'
+        type: array
+    type: object
+  story_post.StoryPostResponse:
+    properties:
+      author_id:
+        type: string
+      chapter_id:
+        type: string
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      is_notify_followers:
+        type: boolean
+      media_ids:
+        items:
+          type: string
+        type: array
+      story_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  story_post.UpdateStoryPostRequest:
+    properties:
+      content:
+        type: string
+      is_notify_followers:
+        type: boolean
+      media_ids:
+        items:
+          type: string
+        type: array
+    type: object
+  story_report.CreateReportRequest:
+    properties:
+      chapter_id:
+        type: string
+      description:
+        maxLength: 2000
+        type: string
+      reason:
+        allOf:
+        - $ref: '#/definitions/story_report.ReportReason'
+        enum:
+        - spam
+        - harassment
+        - hate_speech
+        - plagiarism
+        - copyright
+        - inappropriate
+        - misinformation
+        - other
+      story_id:
+        type: string
+      title:
+        maxLength: 255
+        type: string
+    required:
+    - reason
+    - story_id
+    - title
+    type: object
+  story_report.RejectReportRequest:
+    properties:
+      rejection_reason:
+        maxLength: 2000
+        type: string
+    type: object
+  story_report.ReportListResponse:
+    properties:
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+      reports:
+        items:
+          $ref: '#/definitions/story_report.ReportResponse'
+        type: array
+    type: object
+  story_report.ReportReason:
+    enum:
+    - spam
+    - harassment
+    - hate_speech
+    - plagiarism
+    - copyright
+    - inappropriate
+    - misinformation
+    - other
+    type: string
+    x-enum-varnames:
+    - ReportReasonSpam
+    - ReportReasonHarassment
+    - ReportReasonHateSpeech
+    - ReportReasonPlagiarism
+    - ReportReasonCopyright
+    - ReportReasonInappropriate
+    - ReportReasonMisinformation
+    - ReportReasonOther
+  story_report.ReportResponse:
+    properties:
+      chapter_id:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      is_resolved:
+        type: boolean
+      reason:
+        $ref: '#/definitions/story_report.ReportReason'
+      reporter_id:
+        type: string
+      resolved_at:
+        type: string
+      resolved_by:
+        type: string
+      status:
+        $ref: '#/definitions/sqlc.ReportStatus'
+      story_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  story_report.ResolveReportRequest:
+    properties:
+      resolution_notes:
+        maxLength: 2000
+        type: string
+    type: object
+  story_report.UpdateReportRequest:
+    properties:
+      description:
+        maxLength: 2000
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/sqlc.ReportStatus'
+        enum:
+        - pending
+        - resolved
+        - rejected
+        - archived
+    type: object
+  story_status_history.StatusHistoryListResponse:
+    properties:
+      history:
+        items:
+          $ref: '#/definitions/story_status_history.StatusHistoryResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  story_status_history.StatusHistoryResponse:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      reason:
+        type: string
+      set_status_by:
+        type: string
+      status:
+        $ref: '#/definitions/sqlc.StoryStatus'
+      story_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  story_vote.CreateVoteRequest:
+    properties:
+      rating:
+        maximum: 5
+        minimum: 1
+        type: integer
+      story_id:
+        type: string
+    required:
+    - rating
+    - story_id
+    type: object
+  story_vote.VoteListResponse:
+    properties:
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+      votes:
+        items:
+          $ref: '#/definitions/story_vote.VoteResponse'
+        type: array
+    type: object
+  story_vote.VoteResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      rating:
+        type: integer
+      story_id:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  story_vote.VoteStatsResponse:
+    properties:
+      average_rating:
+        type: number
+      story_id:
+        type: string
+      total_votes:
+        type: integer
+    type: object
+  subject.Scope:
+    enum:
+    - web:read
+    - web:write
+    - profile:read
+    - profile:write
+    - author:read
+    - author:write
+    - file:read
+    - file:write
+    - submission:read
+    - submission:write
+    - story:read
+    - story:write
+    - story.vote:read
+    - story.vote:write
+    - story.report:read
+    - story.report:write
+    - story.post:read
+    - story.post:write
+    - tag:read
+    - tag:write
+    - comment:read
+    - comment:write
+    - comment:moderate
+    - chapter:read
+    - chapter:write
+    - document:read
+    - document:write
+    - notification:read
+    - notification:write
+    type: string
+    x-enum-varnames:
+    - WebReadScope
+    - WebWriteScope
+    - ProfileReadScope
+    - ProfileWriteScope
+    - AuthorReadScope
+    - AuthorWriteScope
+    - FileReadScope
+    - FileWriteScope
+    - SubmissionReadScope
+    - SubmissionWriteScope
+    - StoryReadScope
+    - StoryWriteScope
+    - StoryVoteReadScope
+    - StoryVoteWriteScope
+    - StoryReportReadScope
+    - StoryReportWriteScope
+    - StoryPostReadScope
+    - StoryPostWriteScope
+    - TagReadScope
+    - TagWriteScope
+    - CommentReadScope
+    - CommentWriteScope
+    - CommentModerateScope
+    - ChapterReadScope
+    - ChapterWriteScope
+    - DocumentReadScope
+    - DocumentWriteScope
+    - NotificationReadScope
+    - NotificationWriteScope
+  submission.ApproveSubmissionRequest:
+    properties:
+      reason:
+        type: string
+    type: object
+  submission.AssignSubmissionRequest:
+    properties:
+      assigned_to:
+        type: string
+    required:
+    - assigned_to
+    type: object
+  submission.BulkUpdateSLABreachRequest:
+    properties:
+      ids:
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - ids
+    type: object
+  submission.BulkUpdateStatusRequest:
+    properties:
+      ids:
+        items:
+          type: string
+        type: array
+      status:
+        $ref: '#/definitions/sqlc.SubmissionStatus'
+    required:
+    - ids
+    - status
+    type: object
+  submission.ContextDoc:
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      url:
+        type: string
+    type: object
+  submission.CreateSubmissionRequest:
+    properties:
+      approver_id:
+        type: string
+      assignee_ids:
+        items:
+          type: string
+        type: array
+      context:
+        $ref: '#/definitions/submission.SubmissionContext'
+      message:
+        type: string
+      requester_id:
+        type: string
+      tags:
+        items:
+          type: string
+        maxItems: 10
+        type: array
+      title:
+        type: string
+      type:
+        $ref: '#/definitions/sqlc.SubmissionType'
+    required:
+    - requester_id
+    - title
+    - type
+    type: object
+  submission.RejectSubmissionRequest:
+    properties:
+      reason:
+        type: string
+    type: object
+  submission.SLAComplianceStats:
+    properties:
+      compliance_rate:
+        type: number
+      compliant_count:
+        type: integer
+      non_compliant_count:
+        type: integer
+      total_pending:
+        type: integer
+    type: object
+  submission.SubmissionContext:
+    properties:
+      deadline:
+        type: string
+      documents:
+        items:
+          $ref: '#/definitions/submission.ContextDoc'
+        type: array
+      justification:
+        type: string
+      metadata:
+        additionalProperties: {}
+        type: object
+      priority:
+        type: string
+      request_type:
+        type: string
+    type: object
+  submission.SubmissionResponse:
+    properties:
+      status_history:
+        items:
+          $ref: '#/definitions/sqlc.SubmissionStatusHistory'
+        type: array
+      submission:
+        $ref: '#/definitions/sqlc.Submission'
+    type: object
+  submission.SubmissionResponses:
+    properties:
+      meta:
+        $ref: '#/definitions/queryparam.PaginationMeta'
+      submissions:
+        items:
+          $ref: '#/definitions/submission.SubmissionResponse'
+        type: array
+    type: object
+  submission.UpdateContextRequest:
+    properties:
+      context:
+        $ref: '#/definitions/submission.SubmissionContext'
+    required:
+    - context
+    type: object
+  submission.UpdateSubmissionRequest:
+    properties:
+      approver_id:
+        type: string
+      context:
+        $ref: '#/definitions/submission.SubmissionContext'
+      message:
+        type: string
+      tags:
+        items:
+          type: string
+        maxItems: 10
+        type: array
+      title:
+        type: string
+      type:
+        $ref: '#/definitions/sqlc.SubmissionType'
+    type: object
+  tag.CreateTagRequest:
+    properties:
+      color:
+        type: string
+      description:
+        maxLength: 255
+        type: string
+      entity_id:
+        type: string
+      entity_type:
+        allOf:
+        - $ref: '#/definitions/sqlc.EntityType'
+        enum:
+        - story
+        - chapter
+        - comment
+        - submission
+      is_hidden:
+        type: boolean
+      is_recommended:
+        type: boolean
+      is_system:
+        type: boolean
+      name:
+        maxLength: 50
+        type: string
+    required:
+    - color
+    - entity_type
+    - name
+    type: object
+  tag.TagListResponse:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      tags:
+        items:
+          $ref: '#/definitions/tag.TagResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  tag.TagResponse:
+    properties:
+      color:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      entity_id:
+        type: string
+      entity_type:
+        $ref: '#/definitions/sqlc.EntityType'
+      id:
+        type: string
+      is_hidden:
+        type: boolean
+      is_recommended:
+        type: boolean
+      is_system:
+        type: boolean
+      name:
+        type: string
+      owner_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  tag.UpdateTagRequest:
+    properties:
+      color:
+        type: string
+      description:
+        maxLength: 255
+        type: string
+      is_hidden:
+        type: boolean
+      is_recommended:
+        type: boolean
+      is_system:
+        type: boolean
+      name:
+        maxLength: 50
+        type: string
+    type: object
+  user.UserResponse:
+    properties:
+      user:
+        $ref: '#/definitions/sqlc.User'
+    type: object
+  user.UserScopeResponse:
+    properties:
+      scopes:
+        items:
+          $ref: '#/definitions/subject.Scope'
+        type: array
+    type: object
+  user_setting.UserEditorSetting:
+    properties:
+      auto_save:
+        type: boolean
+      auto_save_delay:
+        maximum: 300
+        minimum: 5
+        type: integer
+      background_color:
+        type: string
+      font_family:
+        type: string
+      font_size:
+        maximum: 32
+        minimum: 10
+        type: integer
+      line_wrapping:
+        type: boolean
+      tab_size:
+        maximum: 8
+        minimum: 2
+        type: integer
+      text_color:
+        type: string
+    required:
+    - background_color
+    - font_family
+    - font_size
+    - tab_size
+    - text_color
+    type: object
+  user_setting.UserNotificationSetting:
+    properties:
+      digest_frequency:
+        enum:
+        - instant
+        - daily
+        - weekly
+        type: string
+      email_enabled:
+        type: boolean
+      push_enabled:
+        type: boolean
+    required:
+    - digest_frequency
+    type: object
+  user_setting.UserPreferenceSetting:
+    properties:
+      language:
+        enum:
+        - en
+        - es
+        - fr
+        - de
+        - zh
+        - ja
+        - vi
+        type: string
+      marketing_opt_in:
+        type: boolean
+      theme:
+        enum:
+        - light
+        - dark
+        - system
+        type: string
+      timezone:
+        type: string
+    required:
+    - language
+    - theme
+    - timezone
+    type: object
+  user_setting.UserSettingResponse:
+    properties:
+      user_setting:
+        properties:
+          editor:
+            $ref: '#/definitions/user_setting.UserEditorSetting'
+          notification:
+            $ref: '#/definitions/user_setting.UserNotificationSetting'
+          preference:
+            $ref: '#/definitions/user_setting.UserPreferenceSetting'
+        type: object
+    type: object
+  user_setting.UserSettingUpdate:
+    properties:
+      editor:
+        $ref: '#/definitions/user_setting.UserEditorSetting'
+      notification:
+        $ref: '#/definitions/user_setting.UserNotificationSetting'
+      preference:
+        $ref: '#/definitions/user_setting.UserPreferenceSetting'
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8000
+info:
+  contact:
+    email: trao0312@gmail.com
+    name: API Support
+    url: https://github.com/justblue/samsa
+  description: Samsa is a simple backend for a writing platform.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Samsa
+  version: 0.1.0
+paths:
+  /{user_id}/online:
+    get:
+      consumes:
+      - application/json
+      description: Checks if a user is currently online. Requires user actor.
+      parameters:
+      - description: User UUID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Check user online status
+      tags:
+      - users
+  /admin/flags:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves flags with filtering options. Requires moderator/inspector
+        role.
+      parameters:
+      - description: Filter by story UUID
+        in: query
+        name: story_id
+        type: string
+      - description: Filter by chapter UUID
+        in: query
+        name: chapter_id
+        type: string
+      - description: Filter by inspector UUID
+        in: query
+        name: inspector_id
+        type: string
+      - description: Filter by flag type
+        in: query
+        name: flag_type
+        type: string
+      - description: Filter by flag rate
+        in: query
+        name: flag_rate
+        type: string
+      - description: Minimum flag score
+        format: float64
+        in: query
+        name: min_score
+        type: number
+      - description: Maximum flag score
+        format: float64
+        in: query
+        name: max_score
+        type: number
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/flag.FlagListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List flags
+      tags:
+      - flags
+    post:
+      consumes:
+      - application/json
+      description: Creates a new flag for content moderation. Requires moderator/inspector
+        role.
+      parameters:
+      - description: Flag creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/flag.CreateFlagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/flag.FlagResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create flag
+      tags:
+      - flags
+  /admin/flags/{flag_id}:
+    delete:
+      description: Deletes a flag. Requires moderator/inspector role.
+      parameters:
+      - description: Flag UUID
+        in: path
+        name: flag_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete flag
+      tags:
+      - flags
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a flag by its UUID. Requires moderator/inspector role.
+      parameters:
+      - description: Flag UUID
+        in: path
+        name: flag_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/flag.FlagResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get flag by ID
+      tags:
+      - flags
+    patch:
+      consumes:
+      - application/json
+      description: Updates flag details. Requires moderator/inspector role.
+      parameters:
+      - description: Flag UUID
+        in: path
+        name: flag_id
+        required: true
+        type: string
+      - description: Flag update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/flag.UpdateFlagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/flag.FlagResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update flag
+      tags:
+      - flags
+  /authors:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Retrieves a list of authors with pagination and optional filters.
+        Supports anonymous and authenticated users. Required scopes: `author:read`.
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 20, max: 100)'
+        in: query
+        name: limit
+        type: integer
+      - description: Sort field (created_at, updated_at, stage_name)
+        example: created_at:desc
+        in: query
+        name: order_by
+        type: string
+      - description: Filter by recommended status
+        example: true
+        in: query
+        name: is_recommended
+        type: boolean
+      - description: Search by stage name
+        example: foo
+        in: query
+        name: search_query
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.AuthorResponses'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List authors
+      tags:
+      - authors
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Creates a new author profile for the authenticated user.
+        Requires user actor and `author:write` scope.
+      parameters:
+      - description: Author creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/author.CreateAuthorRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/author.AuthorReposonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create author
+      tags:
+      - authors
+  /authors/{author_id}:
+    delete:
+      consumes:
+      - application/json
+      description: |-
+        Soft deletes an author profile by their UUID.
+        Requires moderator actor and `author:write` scope.
+      parameters:
+      - description: Author UUID
+        in: path
+        name: author_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete author
+      tags:
+      - authors
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Retrieves an author profile by their UUID.
+        Requires user actor and `author:read` scope.
+      parameters:
+      - description: Author UUID
+        in: path
+        name: author_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.AuthorReposonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get author by ID
+      tags:
+      - authors
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Updates an author profile by their UUID.
+        Requires user actor and `author:write` scope.
+      parameters:
+      - description: Author UUID
+        in: path
+        name: author_id
+        required: true
+        type: string
+      - description: Author update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/author.UpdateAuthorRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.AuthorReposonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update author
+      tags:
+      - authors
+  /authors/{author_id}/posts:
+    get:
+      description: Retrieves all posts by a specific author.
+      parameters:
+      - description: Author UUID
+        in: path
+        name: author_id
+        required: true
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/story_post.StoryPostResponse'
+            type: array
+      summary: List author posts
+      tags:
+      - story-posts
+  /authors/{author_id}/recommend:
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Sets the recommended status for an author.
+        Requires moderator actor and `author:read` scope.
+      parameters:
+      - description: Author UUID
+        in: path
+        name: author_id
+        required: true
+        type: string
+      - description: Recommended status request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/author.SetRecommendedRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.AuthorReposonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Set author recommended status
+      tags:
+      - authors
+  /authors/me:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Retrieves the author profile for the authenticated user.
+        Requires a valid JWT token with user actor and `author:read` scope.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.AuthorReposonse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get current author's profile
+      tags:
+      - authors
+  /authors/slug/{slug}:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Retrieves an author profile by their unique slug.
+        Requires user actor and `author:read` scope.
+      parameters:
+      - description: Author slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.AuthorReposonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get author by slug
+      tags:
+      - authors
+  /chapters:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves chapters for a story.
+      parameters:
+      - description: Story UUID
+        in: query
+        name: story_id
+        required: true
+        type: string
+      - description: Filter by published status
+        in: query
+        name: is_published
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/chapter.ChapterResponse'
+            type: array
+      summary: List chapters
+      tags:
+      - chapters
+    post:
+      consumes:
+      - application/json
+      description: Creates a new chapter for a story. Requires `user actor`.
+      parameters:
+      - description: Chapter creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/chapter.CreateChapterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create chapter
+      tags:
+      - chapters
+  /chapters/{chapter_id}:
+    delete:
+      description: Soft deletes a chapter. Requires `user actor` and ownership.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Delete chapter
+      tags:
+      - chapters
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a chapter by its UUID.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get chapter by ID
+      tags:
+      - chapters
+    patch:
+      consumes:
+      - application/json
+      description: Updates chapter details. Requires `user actor` and ownership.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      - description: Chapter update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/chapter.UpdateChapterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+      security:
+      - BearerAuth: []
+      summary: Update chapter
+      tags:
+      - chapters
+  /chapters/{chapter_id}/publish:
+    patch:
+      description: Publishes a chapter. Requires `user actor` and ownership.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+      security:
+      - BearerAuth: []
+      summary: Publish chapter
+      tags:
+      - chapters
+  /chapters/{chapter_id}/reorder:
+    patch:
+      consumes:
+      - application/json
+      description: Reorders a chapter within a story. Requires `user actor` and ownership.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      - description: Reorder request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/chapter.ReorderChapterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+      security:
+      - BearerAuth: []
+      summary: Reorder chapter
+      tags:
+      - chapters
+  /chapters/{chapter_id}/unpublish:
+    patch:
+      description: Unpublishes a chapter. Requires `user actor` and ownership.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+      security:
+      - BearerAuth: []
+      summary: Unpublish chapter
+      tags:
+      - chapters
+  /chapters/{chapter_id}/view:
+    post:
+      description: Increments the view count for a chapter.
+      parameters:
+      - description: Chapter UUID
+        in: path
+        name: chapter_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/chapter.ChapterResponse'
+      summary: Increment chapter views
+      tags:
+      - chapters
+  /comments/batch:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve multiple comments by their UUIDs. Requires `comment:read`
+        scope.
+      parameters:
+      - description: Comma-separated comment UUIDs
+        in: query
+        name: ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/comment.CommentResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get comments by IDs
+      tags:
+      - comments
+  /comments/bulk/archive:
+    post:
+      consumes:
+      - application/json
+      description: Bulk archive comments (moderator only). Requires `comment:moderate`
+        scope.
+      parameters:
+      - description: Comment IDs to archive
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/comment.BulkCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/comment.CommentResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Bulk archive comments
+      tags:
+      - comments
+  /comments/bulk/delete:
+    post:
+      consumes:
+      - application/json
+      description: Bulk delete comments (moderator only or own comments). Requires
+        `comment:moderate` scope.
+      parameters:
+      - description: Comment IDs to delete
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/comment.BulkCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/comment.CommentResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Bulk delete comments
+      tags:
+      - comments
+  /comments/bulk/pin:
+    post:
+      consumes:
+      - application/json
+      description: Bulk pin comments (moderator only). Requires `comment:moderate`
+        scope.
+      parameters:
+      - description: Comment IDs to pin
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/comment.BulkCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/comment.CommentResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Bulk pin comments
+      tags:
+      - comments
+  /comments/bulk/resolve:
+    post:
+      consumes:
+      - application/json
+      description: Bulk resolve comments (moderator only). Requires `comment:moderate`
+        scope.
+      parameters:
+      - description: Comment IDs to resolve
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/comment.BulkCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/comment.CommentResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Bulk resolve comments
+      tags:
+      - comments
+  /comments/bulk/unpin:
+    post:
+      consumes:
+      - application/json
+      description: Bulk unpin comments (moderator only). Requires `comment:moderate`
+        scope.
+      parameters:
+      - description: Comment IDs to unpin
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/comment.BulkCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/comment.CommentResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Bulk unpin comments
+      tags:
+      - comments
+  /comments/filter:
+    get:
+      consumes:
+      - application/json
+      description: List comments with advanced filtering options. Requires `comment:read`
+        scope.
+      parameters:
+      - description: Entity type
+        in: query
+        name: entity_type
+        required: true
+        type: string
+      - description: Entity UUID
+        in: query
+        name: entity_id
+        required: true
+        type: string
+      - description: Filter by deleted status
+        in: query
+        name: is_deleted
+        type: boolean
+      - description: Filter by resolved status
+        in: query
+        name: is_resolved
+        type: boolean
+      - description: Filter by archived status
+        in: query
+        name: is_archived
+        type: boolean
+      - description: Filter by reported status
+        in: query
+        name: is_reported
+        type: boolean
+      - description: Filter by pinned status
+        in: query
+        name: is_pinned
+        type: boolean
+      - description: Filter by parent comment ID
+        in: query
+        name: parent_id
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/comment.CommentListResponse'
+      security:
+      - BearerAuth: []
+      summary: List comments with filters
+      tags:
+      - comments
+  /comments/search:
+    get:
+      consumes:
+      - application/json
+      description: Search comments by content within an entity. Requires `comment:read`
+        scope.
+      parameters:
+      - description: Entity type (story, author, etc.)
+        in: query
+        name: entity_type
+        required: true
+        type: string
+      - description: Entity UUID
+        in: query
+        name: entity_id
+        required: true
+        type: string
+      - description: Search query
+        in: query
+        name: search
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/comment.CommentListResponse'
+      security:
+      - BearerAuth: []
+      summary: Search comments
+      tags:
+      - comments
+  /document-folders:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves document folders based on filters.
+      parameters:
+      - description: Story UUID
+        in: query
+        name: story_id
+        type: string
+      - description: Parent Folder UUID
+        in: query
+        name: parent_id
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document_folder.DocumentFolderResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List document folders
+      tags:
+      - document-folders
+    post:
+      consumes:
+      - application/json
+      description: Creates a new document folder. Requires `user actor`.
+      parameters:
+      - description: Folder creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/document_folder.CreateDocumentFolderRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/document_folder.DocumentFolderResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create document folder
+      tags:
+      - document-folders
+  /document-folders/{folder_id}:
+    delete:
+      description: Deletes a folder. Requires `user actor` and ownership. Folder must
+        be empty.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete document folder
+      tags:
+      - document-folders
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a document folder by its UUID.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document_folder.DocumentFolderResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get document folder by ID
+      tags:
+      - document-folders
+    patch:
+      consumes:
+      - application/json
+      description: Updates folder details. Requires `user actor` and ownership.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      - description: Folder update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/document_folder.UpdateDocumentFolderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document_folder.DocumentFolderResponse'
+      security:
+      - BearerAuth: []
+      summary: Update document folder
+      tags:
+      - document-folders
+  /document-folders/{folder_id}/ancestors:
+    get:
+      description: Retrieves ancestor folders of a folder.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document_folder.DocumentFolderResponse'
+            type: array
+      summary: Get folder ancestors
+      tags:
+      - document-folders
+  /document-folders/{folder_id}/descendants:
+    get:
+      description: Retrieves descendant folders of a folder.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document_folder.DocumentFolderResponse'
+            type: array
+      summary: Get folder descendants
+      tags:
+      - document-folders
+  /document-folders/{folder_id}/move:
+    post:
+      consumes:
+      - application/json
+      description: Moves a folder to a new parent. Requires `user actor` and ownership.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      - description: Move request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/document_folder.MoveDocumentFolderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document_folder.DocumentFolderResponse'
+      security:
+      - BearerAuth: []
+      summary: Move document folder
+      tags:
+      - document-folders
+  /document-folders/{folder_id}/tree:
+    get:
+      description: Retrieves the folder tree starting from a folder.
+      parameters:
+      - description: Folder UUID
+        in: path
+        name: folder_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document_folder.DocumentFolderResponse'
+            type: array
+      summary: Get folder tree
+      tags:
+      - document-folders
+  /document-folders/search:
+    get:
+      description: Searches for document folders by name.
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document_folder.DocumentFolderResponse'
+            type: array
+      summary: Search document folders
+      tags:
+      - document-folders
+  /documents:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves documents based on filters.
+      parameters:
+      - description: Story UUID
+        in: query
+        name: story_id
+        type: string
+      - description: Folder UUID
+        in: query
+        name: folder_id
+        type: string
+      - description: Document status
+        in: query
+        name: status
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document.DocumentResponse'
+            type: array
+      summary: List documents
+      tags:
+      - documents
+    post:
+      consumes:
+      - application/json
+      description: Creates a new document. Requires `user actor`.
+      parameters:
+      - description: Document creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/document.CreateDocumentRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create document
+      tags:
+      - documents
+  /documents/{document_id}:
+    delete:
+      description: Soft deletes a document. Requires `user actor` and ownership.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Delete document
+      tags:
+      - documents
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a document by its UUID.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get document by ID
+      tags:
+      - documents
+    patch:
+      consumes:
+      - application/json
+      description: Updates document details. Requires `user actor` and ownership.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      - description: Document update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/document.UpdateDocumentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+      security:
+      - BearerAuth: []
+      summary: Update document
+      tags:
+      - documents
+  /documents/{document_id}/approve:
+    post:
+      consumes:
+      - application/json
+      description: Approves a document. Requires approval permissions.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      - description: Comments
+        in: body
+        name: request
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+      security:
+      - BearerAuth: []
+      summary: Approve document
+      tags:
+      - documents
+  /documents/{document_id}/archive:
+    post:
+      description: Archives a document. Requires `user actor` and ownership.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+      security:
+      - BearerAuth: []
+      summary: Archive document
+      tags:
+      - documents
+  /documents/{document_id}/reject:
+    post:
+      consumes:
+      - application/json
+      description: Rejects a document. Requires approval permissions.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      - description: Comments
+        in: body
+        name: request
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+      security:
+      - BearerAuth: []
+      summary: Reject document
+      tags:
+      - documents
+  /documents/{document_id}/status-history:
+    get:
+      description: Retrieves status history for a document.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/sqlc.DocumentStatusHistory'
+            type: array
+      summary: Get document status history
+      tags:
+      - documents
+  /documents/{document_id}/submit:
+    post:
+      description: Submits a document for review. Requires `user actor` and ownership.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+      security:
+      - BearerAuth: []
+      summary: Submit document for review
+      tags:
+      - documents
+  /documents/{document_id}/versions:
+    get:
+      description: Retrieves version history for a document.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/document.DocumentResponse'
+            type: array
+      summary: Get document version history
+      tags:
+      - documents
+  /documents/{document_id}/view:
+    post:
+      description: Increments the view count for a document.
+      parameters:
+      - description: Document UUID
+        in: path
+        name: document_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+      summary: Increment document views
+      tags:
+      - documents
+  /documents/slug/{slug}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a document by its slug.
+      parameters:
+      - description: Document slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/document.DocumentResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Get document by slug
+      tags:
+      - documents
+  /entities/{entity_type}/{entity_id}/tags:
+    get:
+      description: Retrieves all tags for a specific entity. Requires `user` actor
+        and `tag:read` scope.
+      parameters:
+      - description: Entity type (story, chapter, comment, submission)
+        in: path
+        name: entity_type
+        required: true
+        type: string
+      - description: Entity UUID
+        in: path
+        name: entity_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/tag.TagResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get entity tags
+      tags:
+      - tags
+  /entities/{entity_type}/{entity_id}/tags/count:
+    get:
+      description: Retrieves the count of tags for a specific entity. Requires `user`
+        actor and `tag:read` scope.
+      parameters:
+      - description: Entity type
+        in: path
+        name: entity_type
+        required: true
+        type: string
+      - description: Entity UUID
+        in: path
+        name: entity_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get tag count
+      tags:
+      - tags
+  /files/{id}/restore:
+    post:
+      consumes:
+      - application/json
+      description: Restore a soft deleted file. Requires `file:write` scope.
+      parameters:
+      - description: File UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.FileResponse'
+      security:
+      - BearerAuth: []
+      summary: Restore file
+      tags:
+      - files
+  /files/{id}/share:
+    post:
+      consumes:
+      - application/json
+      description: Mark a file as shared (makes it publicly accessible). Requires
+        `file:write` scope.
+      parameters:
+      - description: File UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.FileResponse'
+      security:
+      - BearerAuth: []
+      summary: Share file
+      tags:
+      - files
+  /files/{id}/trash:
+    post:
+      consumes:
+      - application/json
+      description: Soft delete a file (can be restored). Requires `file:write` scope.
+      parameters:
+      - description: File UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.FileResponse'
+      security:
+      - BearerAuth: []
+      summary: Soft delete file
+      tags:
+      - files
+  /files/{id}/unshare:
+    post:
+      consumes:
+      - application/json
+      description: Mark a file as private. Requires `file:write` scope.
+      parameters:
+      - description: File UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.FileResponse'
+      security:
+      - BearerAuth: []
+      summary: Unshare file
+      tags:
+      - files
+  /files/by-mime-type:
+    get:
+      consumes:
+      - application/json
+      description: List files filtered by MIME type. Requires `file:read` scope.
+      parameters:
+      - description: MIME type (e.g., image/jpeg)
+        in: query
+        name: mime_type
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.ListResponse'
+      security:
+      - BearerAuth: []
+      summary: Get files by MIME type
+      tags:
+      - files
+  /files/by-owner-type:
+    get:
+      consumes:
+      - application/json
+      description: List files filtered by owner ID and MIME type. Requires `file:read`
+        scope.
+      parameters:
+      - description: Owner UUID
+        in: query
+        name: owner_id
+        required: true
+        type: string
+      - description: MIME type (e.g., image/*)
+        in: query
+        name: mime_type
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.ListResponse'
+      security:
+      - BearerAuth: []
+      summary: Get files by owner and type
+      tags:
+      - files
+  /files/count-by-mime-type:
+    get:
+      consumes:
+      - application/json
+      description: Count total files with a specific MIME type. Requires `file:read`
+        scope.
+      parameters:
+      - description: MIME type
+        in: query
+        name: mime_type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Count files by MIME type
+      tags:
+      - files
+  /files/filter:
+    get:
+      consumes:
+      - application/json
+      description: List files with advanced filtering options. Requires `file:read`
+        scope.
+      parameters:
+      - description: Filter by owner UUID
+        in: query
+        name: owner_id
+        type: string
+      - description: Filter by MIME type
+        in: query
+        name: mime_type
+        type: string
+      - description: Filter by reference (shared/private)
+        in: query
+        name: reference
+        type: string
+      - description: Filter by archived status
+        in: query
+        name: is_archived
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.ListResponse'
+      security:
+      - BearerAuth: []
+      summary: List files with filters
+      tags:
+      - files
+  /files/shared:
+    get:
+      consumes:
+      - application/json
+      description: List all publicly shared files. Requires `file:read` scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file.ListResponse'
+      security:
+      - BearerAuth: []
+      summary: List shared files
+      tags:
+      - files
+  /files/total-size:
+    get:
+      consumes:
+      - application/json
+      description: Get total storage size used by an owner. Requires `file:read` scope.
+      parameters:
+      - description: Owner UUID
+        in: query
+        name: owner_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get total size by owner
+      tags:
+      - files
+  /me:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the authenticated user's information. Requires user actor.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get current user
+      tags:
+      - users
+  /me/oauth-accounts/{provider}:
+    delete:
+      consumes:
+      - application/json
+      description: Disconnects an OAuth provider (github or google) from the authenticated
+        user's account. Requires user actor. Cannot disconnect the last authentication
+        method.
+      parameters:
+      - description: OAuth provider (github or google)
+        enum:
+        - google
+        - github
+        in: path
+        name: provider
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Disconnect OAuth provider
+      tags:
+      - users
+  /me/scopes:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the OAuth scopes granted to the authenticated user. Requires
+        user actor.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UserScopeResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get current user scopes
+      tags:
+      - users
+  /me/settings:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the settings (preference, editor, notification) for the
+        authenticated user. Requires user actor.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user_setting.UserSettingResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get current user settings
+      tags:
+      - user-settings
+    patch:
+      consumes:
+      - application/json
+      description: Updates the settings (preference, editor, notification) for the
+        authenticated user. Requires user actor.
+      parameters:
+      - description: User settings update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/user_setting.UserSettingUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user_setting.UserSettingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update current user settings
+      tags:
+      - user-settings
+  /me/settings/reset:
+    delete:
+      consumes:
+      - application/json
+      description: Resets all user settings (preference, editor, notification) to
+        their default values. Requires user actor.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Reset current user settings
+      tags:
+      - user-settings
+  /owners/{owner_id}/tags:
+    get:
+      description: Retrieves all tags owned by a specific user. Requires `user` actor
+        and `tag:read` scope.
+      parameters:
+      - description: Owner UUID
+        in: path
+        name: owner_id
+        required: true
+        type: string
+      - description: Entity type filter
+        in: query
+        name: entity_type
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.TagListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get owner tags
+      tags:
+      - tags
+  /spinnets:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a paginated list of spinnets.
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/spinnet.SpinnetListResponse'
+      summary: List spinnets
+      tags:
+      - spinnets
+    post:
+      consumes:
+      - application/json
+      description: Creates a new spinnet template.
+      parameters:
+      - description: Spinnet creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/spinnet.CreateSpinnetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/spinnet.SpinnetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Create spinnet
+      tags:
+      - spinnets
+  /spinnets/{spinnet_id}:
+    delete:
+      description: Deletes a spinnet template.
+      parameters:
+      - description: Spinnet UUID
+        in: path
+        name: spinnet_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Delete spinnet
+      tags:
+      - spinnets
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a spinnet by its UUID.
+      parameters:
+      - description: Spinnet UUID
+        in: path
+        name: spinnet_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/spinnet.SpinnetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Get spinnet by ID
+      tags:
+      - spinnets
+    put:
+      consumes:
+      - application/json
+      description: Updates a spinnet template.
+      parameters:
+      - description: Spinnet UUID
+        in: path
+        name: spinnet_id
+        required: true
+        type: string
+      - description: Spinnet update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/spinnet.UpdateSpinnetRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/spinnet.SpinnetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Update spinnet
+      tags:
+      - spinnets
+  /spinnets/syntax/{syntax}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a spinnet by its smart syntax (e.g., /welcome).
+      parameters:
+      - description: Smart syntax (e.g., /welcome)
+        in: path
+        name: syntax
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/spinnet.SpinnetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Get spinnet by smart syntax
+      tags:
+      - spinnets
+  /status-history/{history_id}:
+    get:
+      description: Retrieves a specific status history entry by ID. Requires `user`
+        actor and `story:read` scope.
+      parameters:
+      - description: Status History UUID
+        in: path
+        name: history_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_status_history.StatusHistoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get status history entry
+      tags:
+      - story-status-history
+  /stories:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of stories owned by the current user. Requires
+        `user actor`.
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/story.StoryResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List current user stories
+      tags:
+      - stories
+    post:
+      consumes:
+      - application/json
+      description: Creates a new story. Requires `user actor`.
+      parameters:
+      - description: Story creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story.CreateStoryRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/story.StoryResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create story
+      tags:
+      - stories
+  /stories/{story_id}:
+    delete:
+      description: Soft deletes a story. Requires `user actor` and ownership.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Delete story
+      tags:
+      - stories
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a story by its UUID.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story.StoryResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get story by ID
+      tags:
+      - stories
+    patch:
+      consumes:
+      - application/json
+      description: Updates story details. Requires `user actor` and ownership.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Story update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story.UpdateStoryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story.StoryResponse'
+      security:
+      - BearerAuth: []
+      summary: Update story
+      tags:
+      - stories
+  /stories/{story_id}/archive:
+    patch:
+      description: Changes story status to `archived`. Requires `user actor` and ownership.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story.StoryResponse'
+      security:
+      - BearerAuth: []
+      summary: Archive story
+      tags:
+      - stories
+  /stories/{story_id}/flags:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all flags for a specific story. Requires moderator/inspector
+        role.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Limit per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/flag.FlagListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List flags for a story
+      tags:
+      - flags
+  /stories/{story_id}/my-vote:
+    get:
+      description: Retrieves the authenticated user's vote for a specific story. Requires
+        `user` actor and `story.vote:read` scope.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_vote.VoteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get user's vote
+      tags:
+      - story-votes
+  /stories/{story_id}/posts:
+    get:
+      description: Retrieves all posts linked to a specific story.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/story_post.StoryPostResponse'
+            type: array
+      summary: List story posts
+      tags:
+      - story-posts
+  /stories/{story_id}/posts/count:
+    get:
+      description: Returns the total count of posts for a story.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+      summary: Count story posts
+      tags:
+      - story-posts
+  /stories/{story_id}/posts/filter:
+    get:
+      description: Retrieves posts linked to a story with optional filters.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Filter by author UUID
+        in: query
+        name: author_id
+        type: string
+      - description: Include deleted posts
+        in: query
+        name: include_deleted
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_post.StoryPostListResponse'
+      summary: List story posts with filters
+      tags:
+      - story-posts
+  /stories/{story_id}/publish:
+    patch:
+      description: Changes story status to `published`. Requires `user actor` and
+        ownership.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story.StoryResponse'
+      security:
+      - BearerAuth: []
+      summary: Publish story
+      tags:
+      - stories
+  /stories/{story_id}/reports:
+    get:
+      description: Retrieves a paginated list of reports for a story (moderator only).
+        Requires `user` actor, moderator role, and `story.report:read` scope.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List story reports
+      tags:
+      - story-reports
+  /stories/{story_id}/reports/count:
+    get:
+      description: Retrieves the count of reports for a story (moderator only). Requires
+        `user` actor, moderator role, and `story.report:read` scope.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get report count
+      tags:
+      - story-reports
+  /stories/{story_id}/status-history:
+    get:
+      description: Retrieves the status change history for a story. Requires `user`
+        actor and `story:read` scope.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_status_history.StatusHistoryListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get story status history
+      tags:
+      - story-status-history
+  /stories/{story_id}/vote:
+    delete:
+      description: Deletes the authenticated user's vote for a specific story. Requires
+        `user` actor and `story.vote:write` scope.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete user's vote
+      tags:
+      - story-votes
+    post:
+      consumes:
+      - application/json
+      description: Casts or updates a vote on a story. Requires `user actor`.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Rating (1-5)
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties:
+            format: int32
+            type: integer
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/sqlc.StoryVote'
+      security:
+      - BearerAuth: []
+      summary: Vote on story
+      tags:
+      - stories
+  /stories/{story_id}/vote-stats:
+    get:
+      description: Retrieves vote count and average rating for a story. Public endpoint.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_vote.VoteStatsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      summary: Get vote statistics
+      tags:
+      - story-votes
+  /stories/{story_id}/vote/stats:
+    get:
+      description: Retrieves count and average rating for a story.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/sqlc.GetStoryVoteStatsRow'
+      summary: Get story vote stats
+      tags:
+      - stories
+  /stories/{story_id}/votes:
+    get:
+      description: Retrieves a paginated list of votes for a story. Requires `user`
+        actor and `story.vote:read` scope.
+      parameters:
+      - description: Story UUID
+        in: path
+        name: story_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Sort field (rating, created_at)
+        in: query
+        name: sort_field
+        type: string
+      - description: Sort order (asc, desc)
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_vote.VoteListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List story votes
+      tags:
+      - story-votes
+  /story-posts:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new post (announcement/update) for a story or creator.
+      parameters:
+      - description: Post creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story_post.CreateStoryPostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/story_post.StoryPostResponse'
+      security:
+      - BearerAuth: []
+      summary: Create story post
+      tags:
+      - story-posts
+  /story-posts/{post_id}:
+    delete:
+      description: Deletes a story post.
+      parameters:
+      - description: Post UUID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Delete post
+      tags:
+      - story-posts
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a story post by its UUID.
+      parameters:
+      - description: Post UUID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_post.StoryPostResponse'
+      summary: Get post by ID
+      tags:
+      - story-posts
+    patch:
+      consumes:
+      - application/json
+      description: Updates post content or notify status.
+      parameters:
+      - description: Post UUID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      - description: Post update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story_post.UpdateStoryPostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_post.StoryPostResponse'
+      security:
+      - BearerAuth: []
+      summary: Update post
+      tags:
+      - story-posts
+  /story-posts/{post_id}/permanent:
+    delete:
+      description: Permanently deletes a story post (admin only).
+      parameters:
+      - description: Post UUID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Permanently delete post
+      tags:
+      - story-posts
+  /story-posts/{post_id}/restore:
+    post:
+      description: Restores a soft-deleted story post.
+      parameters:
+      - description: Post UUID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_post.StoryPostResponse'
+      security:
+      - BearerAuth: []
+      summary: Restore post
+      tags:
+      - story-posts
+  /story-posts/batch:
+    get:
+      description: Retrieves multiple story posts by their UUIDs.
+      parameters:
+      - description: Comma-separated post UUIDs
+        in: query
+        name: ids
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/story_post.StoryPostResponse'
+            type: array
+      summary: Get posts by IDs
+      tags:
+      - story-posts
+  /story-posts/bulk-delete:
+    post:
+      description: Deletes multiple story posts by IDs.
+      parameters:
+      - description: Post IDs to delete
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story_post.BulkDeleteRequest'
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Bulk delete posts
+      tags:
+      - story-posts
+  /story-reports:
+    get:
+      description: Retrieves a paginated list of reports. Moderators see all, users
+        see their own. Requires `user` actor and `story.report:read` scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by story UUID
+        in: query
+        name: story_id
+        type: string
+      - description: Filter by status (pending, resolved, rejected, archived)
+        in: query
+        name: status
+        type: string
+      - description: Filter by resolved status
+        in: query
+        name: is_resolved
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List reports
+      tags:
+      - story-reports
+    post:
+      consumes:
+      - application/json
+      description: Creates a new report for a story. Requires `user` actor and `story.report:write`
+        scope.
+      parameters:
+      - description: Report creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story_report.CreateReportRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/story_report.ReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create report
+      tags:
+      - story-reports
+  /story-reports/{report_id}:
+    delete:
+      description: Deletes a report. Only reporter or moderator can delete. Requires
+        `user` actor and `story.report:write` scope.
+      parameters:
+      - description: Report UUID
+        in: path
+        name: report_id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete report
+      tags:
+      - story-reports
+    get:
+      description: Retrieves a report by its UUID. Requires `user` actor and `story.report:read`
+        scope.
+      parameters:
+      - description: Report UUID
+        in: path
+        name: report_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get report by ID
+      tags:
+      - story-reports
+    patch:
+      consumes:
+      - application/json
+      description: Updates a report. Reporter can update description, moderators can
+        update status. Requires `user` actor and `story.report:write` scope.
+      parameters:
+      - description: Report UUID
+        in: path
+        name: report_id
+        required: true
+        type: string
+      - description: Report update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story_report.UpdateReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update report
+      tags:
+      - story-reports
+  /story-reports/{report_id}/archive:
+    post:
+      description: Archives a report (moderator only). Requires `user` actor, moderator
+        role, and `story.report:write` scope.
+      parameters:
+      - description: Report UUID
+        in: path
+        name: report_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Archive report
+      tags:
+      - story-reports
+  /story-reports/{report_id}/reject:
+    post:
+      consumes:
+      - application/json
+      description: Rejects a report (moderator only). Requires `user` actor, moderator
+        role, and `story.report:write` scope.
+      parameters:
+      - description: Report UUID
+        in: path
+        name: report_id
+        required: true
+        type: string
+      - description: Rejection reason
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/story_report.RejectReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Reject report
+      tags:
+      - story-reports
+  /story-reports/{report_id}/resolve:
+    post:
+      consumes:
+      - application/json
+      description: Resolves a report (moderator only). Requires `user` actor, moderator
+        role, and `story.report:write` scope.
+      parameters:
+      - description: Report UUID
+        in: path
+        name: report_id
+        required: true
+        type: string
+      - description: Resolution notes
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/story_report.ResolveReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Resolve report
+      tags:
+      - story-reports
+  /story-reports/pending:
+    get:
+      description: Retrieves a paginated list of pending reports (moderator only).
+        Requires `user` actor, moderator role, and `story.report:read` scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_report.ReportListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List pending reports
+      tags:
+      - story-reports
+  /story-reports/pending/count:
+    get:
+      description: Retrieves the count of pending reports (moderator only). Requires
+        `user` actor, moderator role, and `story.report:read` scope.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get pending report count
+      tags:
+      - story-reports
+  /story-votes:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new vote or updates an existing vote for a story. Requires
+        `user` actor and `story.vote:write` scope.
+      parameters:
+      - description: Vote creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/story_vote.CreateVoteRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/story_vote.VoteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create or update vote
+      tags:
+      - story-votes
+  /story-votes/{vote_id}:
+    get:
+      description: Retrieves a vote by its UUID. Requires `user` actor and `story.vote:read`
+        scope.
+      parameters:
+      - description: Vote UUID
+        in: path
+        name: vote_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_vote.VoteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get vote by ID
+      tags:
+      - story-votes
+  /submissions:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of submissions with pagination and optional filters.
+        Requires `user` actor and `submission:read` scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Sort field
+        in: query
+        name: order_by
+        type: string
+      - description: Filter by requester UUID
+        in: query
+        name: requester_id
+        type: string
+      - description: Filter by approver UUID
+        in: query
+        name: approver_id
+        type: string
+      - description: Filter by title
+        in: query
+        name: title
+        type: string
+      - description: Filter by submission_type
+        in: query
+        name: type
+        type: string
+      - description: Filter by submission_status
+        in: query
+        name: status
+        type: string
+      - description: Filter by expose_id (SUB-XXXX)
+        in: query
+        name: expose_id
+        type: string
+      - description: FTS across title + message
+        in: query
+        name: search_query
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponses'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List submissions
+      tags:
+      - submissions
+    post:
+      consumes:
+      - application/json
+      description: Creates a new submission. Requires `user` actor and `submission:write`
+        scope.
+      parameters:
+      - description: Submission creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.CreateSubmissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create submission
+      tags:
+      - submissions
+  /submissions/{submission_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Completely removes a submission by its UUID. Requires `user` actor
+        and `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete submission
+      tags:
+      - submissions
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a submission by its UUID. Requires `user` actor and `submission:read`
+        scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get submission
+      tags:
+      - submissions
+    patch:
+      consumes:
+      - application/json
+      description: Updates an existing submission. Requires `user` actor and `submission:write`
+        scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      - description: Submission update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.UpdateSubmissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update submission
+      tags:
+      - submissions
+  /submissions/{submission_id}/approve:
+    post:
+      consumes:
+      - application/json
+      description: Marks an assigned submission as approved with an attached message.
+        Requires `user` actor and `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      - description: Approve submission request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.ApproveSubmissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Approve submission
+      tags:
+      - submissions
+  /submissions/{submission_id}/archive:
+    post:
+      consumes:
+      - application/json
+      description: Archives a submission by its UUID. Requires `user` actor and `submission:write`
+        scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Archive submission
+      tags:
+      - submissions
+  /submissions/{submission_id}/assign:
+    post:
+      consumes:
+      - application/json
+      description: Assigns an available submission to a specific user. Requires `user`
+        actor and `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      - description: Assign submission request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.AssignSubmissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Assign submission
+      tags:
+      - submissions
+  /submissions/{submission_id}/assignment:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the assignment information for a submission by its UUID.
+        Requires `user` actor and `submission:read` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/sqlc.SubmissionAssignment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get submission assignment
+      tags:
+      - submissions
+  /submissions/{submission_id}/claim:
+    post:
+      consumes:
+      - application/json
+      description: Claims an available unassigned submission for the authenticated
+        user to act as approver. Requires `user` actor and `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Claim submission
+      tags:
+      - submissions
+  /submissions/{submission_id}/context:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the context object for a submission by its UUID. Requires
+        `user` actor and `submission:read` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionContext'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get submission context
+      tags:
+      - submissions
+    patch:
+      consumes:
+      - application/json
+      description: Updates the context map of an existing submission by its UUID.
+        Requires `user` actor and `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      - description: Submission context update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.UpdateContextRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update submission context
+      tags:
+      - submissions
+  /submissions/{submission_id}/delete:
+    patch:
+      consumes:
+      - application/json
+      description: Soft-deletes a submission by its UUID. Requires `user` actor and
+        `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Soft delete submission
+      tags:
+      - submissions
+  /submissions/{submission_id}/history:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the status history list for a submission by its UUID.
+        Requires `user` actor and `submission:read` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/sqlc.SubmissionStatusHistory'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get submission history
+      tags:
+      - submissions
+  /submissions/{submission_id}/pending-duration:
+    get:
+      consumes:
+      - application/json
+      description: Get how long a submission has been in pending status (in seconds).
+        Requires `submission:read` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get submission pending duration
+      tags:
+      - submissions
+  /submissions/{submission_id}/reject:
+    post:
+      consumes:
+      - application/json
+      description: Marks an assigned submission as rejected with an attached message.
+        Requires `user` actor and `submission:write` scope.
+      parameters:
+      - description: Submission UUID
+        in: path
+        name: submission_id
+        required: true
+        type: string
+      - description: Reject submission request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.RejectSubmissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Reject submission
+      tags:
+      - submissions
+  /submissions/available:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of pending, unassigned submissions with pagination.
+        Supports `anonymous` and `user` actors. Requires `submission:read` scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponses'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List available submissions
+      tags:
+      - submissions
+  /submissions/bulk/status:
+    patch:
+      consumes:
+      - application/json
+      description: Updates the status of multiple submissions at once. Requires `user`
+        actor and `submission:write` scope.
+      parameters:
+      - description: Bulk update status request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.BulkUpdateStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Bulk update status
+      tags:
+      - submissions
+  /submissions/me:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of submissions for the authenticated user with
+        pagination and optional filters. Requires `user` actor and `submission:read`
+        scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Sort field
+        in: query
+        name: order_by
+        type: string
+      - description: Filter by approver UUID
+        in: query
+        name: approver_id
+        type: string
+      - description: Filter by title
+        in: query
+        name: title
+        type: string
+      - description: Filter by submission_type
+        in: query
+        name: type
+        type: string
+      - description: Filter by submission_status
+        in: query
+        name: status
+        type: string
+      - description: Filter by expose_id (SUB-XXXX)
+        in: query
+        name: expose_id
+        type: string
+      - description: FTS across title + message
+        in: query
+        name: search_query
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SubmissionResponses'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List own submissions
+      tags:
+      - submissions
+  /submissions/sla/avg-processing-time:
+    get:
+      consumes:
+      - application/json
+      description: Get average processing time for approved submissions. Requires
+        `submission:read` scope.
+      parameters:
+      - description: Number of days to calculate average
+        in: query
+        name: days
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: float64
+              type: number
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get average processing time
+      tags:
+      - submissions
+  /submissions/sla/bulk-breach:
+    post:
+      consumes:
+      - application/json
+      description: Mark multiple submissions as SLA breach. Requires `submission:write`
+        scope.
+      parameters:
+      - description: Submission IDs to mark as breach
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/submission.BulkUpdateSLABreachRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/submission.SubmissionResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Bulk update SLA breach
+      tags:
+      - submissions
+  /submissions/sla/by-status:
+    get:
+      consumes:
+      - application/json
+      description: Get submissions filtered by SLA compliance status. Requires `submission:read`
+        scope.
+      parameters:
+      - description: Include compliant (true) or non-compliant (false)
+        in: query
+        name: include_compliant
+        required: true
+        type: boolean
+      - description: SLA threshold in hours
+        in: query
+        name: sla_hours
+        required: true
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/submission.SubmissionResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get submissions by SLA status
+      tags:
+      - submissions
+  /submissions/sla/compliance-stats:
+    get:
+      consumes:
+      - application/json
+      description: Get SLA compliance statistics including compliant/non-compliant
+        counts and rate. Requires `submission:read` scope.
+      parameters:
+      - description: SLA threshold in hours
+        in: query
+        name: sla_hours
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/submission.SLAComplianceStats'
+      security:
+      - BearerAuth: []
+      summary: Get SLA compliance stats
+      tags:
+      - submissions
+  /submissions/sla/count-exceeding:
+    get:
+      consumes:
+      - application/json
+      description: Get count of submissions that have exceeded the SLA threshold.
+        Requires `submission:read` scope.
+      parameters:
+      - description: SLA threshold in hours
+        in: query
+        name: sla_hours
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Count submissions exceeding SLA
+      tags:
+      - submissions
+  /submissions/sla/exceeding:
+    get:
+      consumes:
+      - application/json
+      description: Get list of submissions that have exceeded the SLA threshold. Requires
+        `submission:read` scope.
+      parameters:
+      - description: SLA threshold in hours
+        in: query
+        name: sla_hours
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/submission.SubmissionResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get submissions exceeding SLA
+      tags:
+      - submissions
+  /tags:
+    get:
+      description: Retrieves a paginated list of tags with optional filters. Requires
+        `user` actor and `tag:read` scope.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by owner UUID
+        in: query
+        name: owner_id
+        type: string
+      - description: Filter by entity UUID
+        in: query
+        name: entity_id
+        type: string
+      - description: Filter by entity type
+        in: query
+        name: entity_type
+        type: string
+      - description: Filter by hidden status
+        in: query
+        name: is_hidden
+        type: boolean
+      - description: Filter by system tags
+        in: query
+        name: is_system
+        type: boolean
+      - description: Filter by recommended tags
+        in: query
+        name: is_recommended
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.TagListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List tags
+      tags:
+      - tags
+    post:
+      consumes:
+      - application/json
+      description: Creates a new tag. Requires `user` actor and `tag:write` scope.
+      parameters:
+      - description: Tag creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/tag.CreateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/tag.TagResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Create tag
+      tags:
+      - tags
+  /tags/{tag_id}:
+    delete:
+      description: Deletes a tag. Only the tag owner can delete. Requires `user` actor
+        and `tag:write` scope.
+      parameters:
+      - description: Tag UUID
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      - description: Entity type filter
+        in: query
+        name: entity_type
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Delete tag
+      tags:
+      - tags
+    get:
+      description: Retrieves a tag by its UUID. Requires `user` actor and `tag:read`
+        scope.
+      parameters:
+      - description: Tag UUID
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      - description: Entity type filter
+        in: query
+        name: entity_type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.TagResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get tag by ID
+      tags:
+      - tags
+    patch:
+      consumes:
+      - application/json
+      description: Updates a tag. Only the tag owner can update. Requires `user` actor
+        and `tag:write` scope.
+      parameters:
+      - description: Tag UUID
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      - description: Tag update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/tag.UpdateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.TagResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Update tag
+      tags:
+      - tags
+  /tags/batch:
+    get:
+      description: Retrieves tags by their UUIDs. Requires `user` actor and `tag:read`
+        scope.
+      parameters:
+      - description: Comma-separated tag UUIDs
+        in: query
+        name: ids
+        required: true
+        type: string
+      - description: Entity type filter
+        in: query
+        name: entity_type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/tag.TagResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get tags by IDs
+      tags:
+      - tags
+  /tags/search:
+    get:
+      description: Searches for tags by name. Requires `user` actor and `tag:read`
+        scope.
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        type: string
+      - description: Entity type filter
+        in: query
+        name: entity_type
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.TagListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: Search tags
+      tags:
+      - tags
+  /users/{user_id}/votes:
+    get:
+      description: Retrieves a paginated list of votes cast by a user. Requires `user`
+        actor and `story.vote:read` scope.
+      parameters:
+      - description: User UUID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Sort field (rating, created_at)
+        in: query
+        name: sort_field
+        type: string
+      - description: Sort order (asc, desc)
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/story_vote.VoteListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.APIError'
+      security:
+      - BearerAuth: []
+      summary: List user votes
+      tags:
+      - story-votes
+swagger: "2.0"

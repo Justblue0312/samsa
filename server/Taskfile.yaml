@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+silent: true
+
+dotenv: [".env"]
+
+vars:
+  DB_DRIVER: postgres
+  DB_URI: "postgres://{{.SAMSA_POSTGRES_USER}}:{{.SAMSA_POSTGRES_PWD}}@{{.SAMSA_POSTGRES_HOST}}:{{.SAMSA_POSTGRES_PORT}}/{{.SAMSA_POSTGRES_DATABASE}}?sslmode=disable"
+  DB_TEST_URI: "postgres://{{.SAMSA_POSTGRES_USER}}:{{.SAMSA_POSTGRES_PWD}}@{{.SAMSA_POSTGRES_HOST}}:{{.SAMSA_POSTGRES_PORT}}/{{.SAMSA_POSTGRES_TEST_DATABASE}}?sslmode=disable"
+  DB_DIR: ./db
+  DB_MIGRATION_DIR: ./db/migrations
+  GEN_DIR: ./gen
+
+tasks:
+  default:
+    desc: List all the commands
+    cmd: task --list
+
+  up:
+    desc: Run the docker-compose up command
+    cmds:
+      - docker compose up -d
+
+  down:
+    desc: Run the docker-compose down command
+    cmds:
+      - docker compose down
+
+  create:db:
+    desc: Create a new database
+    cmds:
+      - docker exec -it samsa-postgres createdb --username={{.samsa_POSTGRES_USER}} --owner={{.samsa_POSTGRES_USER}} {{.samsa_POSTGRES_DATABASE}}
+
+  drop:db:
+    desc: Drop a database
+    cmds:
+      - docker exec -it samsa-postgres dropdb {{.samsa_POSTGRES_DATABASE}}
+
+  migrate:create:
+    desc: Create a new database migration
+    cmds:
+      - goose -dir {{.DB_MIGRATION_DIR}} create {{.NAME}} sql
+
+  migrate:up:
+    desc: Apply all database migrations
+    cmds:
+      - GOOSE_DRIVER={{.DB_DRIVER}} GOOSE_DBSTRING="{{.DB_URI}}" goose -dir {{.DB_MIGRATION_DIR}} up
+
+  migrate:down:
+    desc: Rollback the last database migration
+    cmds:
+      - GOOSE_DRIVER={{.DB_DRIVER}} GOOSE_DBSTRING="{{.DB_URI}}" goose -dir {{.DB_MIGRATION_DIR}} down
+
+  migrate:status:
+    desc: Check the status of database migrations
+    cmds:
+      - GOOSE_DRIVER={{.DB_DRIVER}} GOOSE_DBSTRING="{{.DB_URI}}" goose -dir {{.DB_MIGRATION_DIR}} status
+
+  migrate:reset:
+    desc: Rollback migrations to initial version
+    cmds:
+      - GOOSE_DRIVER={{.DB_DRIVER}} GOOSE_DBSTRING="{{.DB_URI}}" goose -dir {{.DB_MIGRATION_DIR}} down-to 0
+
+  sqlc:
+    desc: Generate SQL code from SQL files
+    cmds:
+      - sqlc -f {{.DB_DIR}}/sqlc.yaml vet
+      - sqlc -f {{.DB_DIR}}/sqlc.yaml generate
+      # - go run cmd/samsa/main.go tools sqlc # Run sqlc file transformation scripts
+
+  run:
+    desc: Run the application
+    cmds:
+      - go run cmd/samsa/main.go
+
+  build:
+    desc: Build the application
+    cmds:
+      - go build -ldflags="-s -w" -o bin/samsa cmd/samsa/*
+
+  generate:
+    desc: Runs all //go:generate commands embedded in .go files
+    cmds:
+      - go generate ./...
+      - task: sqlc
+      - task: swagger
+
+  swagger:
+    desc: Generate swagger documentation
+    cmds:
+      - swag init -o gen/swagger -g bootstrap/cli.go
+      - swag fmt
+
+  tidy:
+    desc: Tidy the Go modules
+    cmds:
+      - go mod tidy
+
+  lint:
+    desc: Lint the Go code
+    cmds:
+      - golangci-lint run
+
+  test:
+    desc: Run tests
+    cmds:
+      - go test ./... -v
+
+  vuln:
+    desc: Run vulnerability check
+    cmds:
+      - govulncheck ./...

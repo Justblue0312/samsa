@@ -1,0 +1,169 @@
+services:
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.25.1
+    container_name: samsa-dragonfly
+    command: ["--proactor_threads=1", "--logtostderr"]
+    ports:
+      - "${SAMSA_REDIS_PORT}:6379"
+    volumes:
+      - "dragonflyVolume:/data"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: postgres:18
+    container_name: samsa-postgres
+    ports:
+      - "${SAMSA_POSTGRES_PORT}:5432"
+    environment:
+      - POSTGRES_USER=${SAMSA_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${SAMSA_POSTGRES_PWD}
+      - POSTGRES_DB=${SAMSA_POSTGRES_DATABASE}
+      - POSTGRES_PORT=${SAMSA_POSTGRES_PORT}
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - postgresVolume:/var/lib/postgresql/data/
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "${SAMSA_POSTGRES_DATABASE}",
+          "-U",
+          "${SAMSA_POSTGRES_USER}",
+        ]
+      timeout: 40s
+      interval: 2s
+      retries: 20
+
+  otel-collector:
+    image: ${OTELCOL_VERSION}
+    container_name: samsa-otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
+    volumes:
+      - ./deploy/observability/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "5317:4317" # OTLP gRPC receiver
+      - "5318:4318" # OTLP HTTP receiver
+      - "9889:9889" # Prometheus exporter metrics
+
+  prometheus:
+    image: prom/prometheus:${PROM_VERSION}
+    container_name: samsa-prometheus
+    volumes:
+      - ./deploy/observability/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheusVolume:/prometheus
+    ports:
+      - "9091:9090"
+
+  jaeger:
+    image: jaegertracing/all-in-one:${JAEGER_VERSION}
+    container_name: samsa-jaeger
+    ports:
+      - "17686:16686"
+
+  loki:
+    image: grafana/loki:${LOKI_VERSION}
+    container_name: samsa-loki
+    volumes:
+      - ./deploy/observability/loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3101:3100"
+
+  promtail:
+    image: grafana/promtail:${PROMTAIL_VERSION}
+    container_name: samsa-promtail
+    volumes:
+      - ./deploy/observability/promtail-config.yaml:/etc/promtail/config.yml
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    ports:
+      - "9081:9080"
+
+  node-exporter:
+    image: prom/node-exporter:${NODE_EXPORTER_VERSION}
+    container_name: samsa-node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)"
+    ports:
+      - "9101:9100"
+
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION}
+    container_name: samsa-grafana
+    volumes:
+      - ./deploy/observability/grafana/provisioning:/etc/grafana/provisioning
+      - grafanaVolume:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+
+  rustfs:
+    image: rustfs/rustfs:${RUSTFS_VERSION}
+    container_name: samsa-rustfs
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # Console
+    environment:
+      - RUSTFS_ADDRESS=${SAMSA_RUSTFS_ADDRESS}
+      - RUSTFS_CONSOLE_ADDRESS=${SAMSA_RUSTFS_CONSOLE_ADDRESS}
+      - RUSTFS_ACCESS_KEY=${SAMSA_RUSTFS_ACCESS_KEY}
+      - RUSTFS_SECRET_KEY=${SAMSA_RUSTFS_SECRET_KEY}
+      - RUSTFS_CONSOLE_ENABLE=${SAMSA_RUSTFS_CONSOLE_ENABLE}
+      # - RUSTFS_OBS_ENDPOINT=${SAMSA_RUSTFS_OBS_ENDPOINT}
+      # - RUSTFS_OBS_LOGGER_LEVEL=${SAMSA_RUSTFS_OBS_LOGGER_LEVEL}
+      - RUSTFS_CORS_ALLOWED_ORIGINS=${SAMSA_RUSTFS_CORS_ALLOWED_ORIGINS}
+    volumes:
+      - rustfsVolume:/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "sh",
+          "-c",
+          "curl -f ${SAMSA_RUSTFS_ADDRESS}/health && curl -f ${SAMSA_RUSTFS_CONSOLE_ADDRESS}/rustfs/console/health",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - db
+
+  rustfs-setup:
+    build:
+      context: ./deploy/rustfs
+      dockerfile: Dockerfile
+    container_name: samsa-rustfs-setup
+    depends_on:
+      - rustfs
+    environment:
+      - SAMSA_RUSTFS_ACCESS_KEY=${SAMSA_RUSTFS_ACCESS_KEY}
+      - SAMSA_RUSTFS_SECRET_KEY=${SAMSA_RUSTFS_SECRET_KEY}
+      - SAMSA_AWS_S3_BUCKETS=${SAMSA_AWS_S3_BUCKETS}
+    volumes:
+      - ./deploy/rustfs:/s3-init
+
+volumes:
+  dragonflyVolume:
+  postgresVolume:
+  prometheusVolume:
+  grafanaVolume:
+  rustfsVolume:
+    driver: local

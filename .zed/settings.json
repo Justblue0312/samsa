@@ -1,0 +1,21 @@
+{
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/.jj",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/.classpath",
+        "**/.settings",
+        "**/.mypy_cache",
+        "**/.pytest_cache",
+        "**/.ruff_cache",
+        "**/__pycache__",
+        "**/.idea/",
+        "**/node_modules/",
+        "**/.vscode/",
+        "**/.venv/",
+    ],
+}

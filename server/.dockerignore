@@ -1,0 +1,49 @@
+# The .dockerignore file excludes files from the container build process.
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+
+# Exclude locally vendored dependencies (if using Go modules, this might not be needed in the final stage)
+vendor/
+
+# Exclude "build-time" ignore files
+.dockerignore
+.gcloudignore
+.gitignore
+
+# Exclude git history and configuration
+.git/
+
+# Exclude binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Temporary files
+*~
+*#
+.#*
+tmp/
+
+# Editor configuration files
+.editorconfig
+.vscode/
+.idea/
+.zed/
+
+# Exclude files and folders
+AUTHORS.md
+CONTRIBUTING.md
+LICENSE
+NOTICE
+README.md
+arm/
+powerpc/
+mips/
+bin/
