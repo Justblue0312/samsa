@@ -1,7 +1,7 @@
 .worktrees
 
-#docs/plans
-#docs/notes
-#docs/todos
+docs/plans
+docs/notes
+docs/todos
 
 data/
